@@ -13,8 +13,8 @@ role :app, "pickmi.mikamai.com"
 role :web, "pickmi.mikamai.com"
 role :db,  "pickmi.mikamai.com", :primary => true
 
-set :user, "reggie"
-set :password, "andrea"
+set :user, "rails"
+set :password, "rails111"
 
 deploy.task :start do 
 end
