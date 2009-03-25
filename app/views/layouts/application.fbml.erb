@@ -1,0 +1,6 @@
+<% fb_tabs do %>
+	<%= fb_tab_item "All books", books_path , :selected => true %>
+	<%= fb_tab_item "My choosen books", favourites_path,  :selected => false %>
+<% end %>
+
+<%= yield  %>

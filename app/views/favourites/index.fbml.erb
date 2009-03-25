@@ -1,0 +1,18 @@
+<label for="entry_books"></label>
+
+<h1>Listing books</h1>
+
+<% for book in @books %>
+<table>
+	<tr class="book">
+		<td><%= image_tag (book.photo, :size => "100x150") %></td>
+		<td><%= link_to h(book.title) , book %>
+    	<p>
+				<%=h truncate(book.summary, :length => 1000) %>
+			</p>
+			<%= link_to 'Non Mi piace', unselect_book_path(book), :method => :put  %>
+			
+		</td>
+	</tr>
+</table>
+<%	end %>
