@@ -1,0 +1,9 @@
+<% 5.times do |i| %>
+<td>
+	<%= 
+		unless @user.books[i].nil?
+			image_tag @user.books[i].photo, :size => "100x150" 
+		end
+	%>
+</td>
+<% end %>

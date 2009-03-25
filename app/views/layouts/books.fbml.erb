@@ -1,0 +1,29 @@
+<%= javascript_include_tag "facebook" %>
+
+<h2> Ciao <%= @facebook_user.first_name @facebook_user.last_name %> </h2>
+<br/> <br>
+
+<table id="profil_table">
+	<%=render :partial => "favourites/profil_table" %>
+</table>
+
+<input id="i_like_text" autocomplete="off" maxlength="20" type="text"/>
+<script>
+	var suggestr = new ajaxSuggestFbml(document.getElementById('i_like_text'),
+					{
+	            preMsgTxt: "Start typing...", 
+	            menuOpacity: 94,
+	            ajaxUrl: "http://localhost:3000" +"/books/auto_complete_for_books_title",    
+	            focus: true, 
+	            onEnter: function(event) {  // handler for hitting the 'enter' key
+	                null;
+	            },
+	            delayTime: 700,   // amount of idle time after a keypress before making the ajax call
+	            clearOnEnter: false   // whether or not to clear the text after they hit enter
+	        }
+	);
+	
+</script>
+
+
+<%= yield  %>

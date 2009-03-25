@@ -1,4 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
+  map.root    :controller => "books"
+
+  map.resources :favourites
+  map.resources :books, :member => { :select => :put , :unselect => :put,
+                                     :select_remote => :put , :unselect_remote => :put
+                                    }, 
+                        :collection => {:auto_complete_for_book_title => :post}
+                        
+  map.resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
