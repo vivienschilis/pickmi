@@ -1,1 +1,189 @@
-table tr .book { font-size: 0.8em; color: #999999;}
+table tr .book { color: #999999;}
+
+.book tr td p { font-size: 0.9em; }
+.book tr td {  vertical-align:top; margin:0px; padding:0px; }
+
+.book_index_title a {  text-decoration: underline; color: #E2017B; background:white; }
+.book_index_title a:visited { text-decoration: underline; color: #E2017B; background:white; }
+.book_index_title a:hover { text-decoration: underline; color: #E2017B; background:white; }
+
+.book_index_summary_ommission a {  color: #E2017B; background:white; text-decoration: underline;}
+.book_index_summary_ommission a:visited {  color: #E2017B; background:white; text-decoration: underline;}
+.book_index_summary_ommission a:hover {  color: #E2017B; background:white;  text-decoration: underline; }
+
+#book_show_table tr td {
+	vertical-align:top;
+	padding:10px;
+}
+
+#book_show_title h2 {
+	color: #6B9FCF;
+	
+}
+
+#book_title {
+	color: #6B9FCF;
+}
+
+#book_show_author h2 {
+	color: #E2017B;
+}
+
+#book_show_info {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  color: black;
+}
+
+#user_side_books {
+	font-size:12px;
+	float: left;
+	width: 450px;
+	margin-right: 50px;
+}
+
+.pagination .disabled { color: #6B9FCF; background: white; font-size : 14px;}
+.pagination .prev_page {color: #E2017B; font-weight: bold; background: white; font-size : 14px;}
+.pagination .current { color: #6B9FCF; background: white; font-size : 14px;}
+.pagination .next_page { color: #6B9FCF; background: white; font-size : 14px; }
+
+#paginate_div {
+	font-size : 14px;
+	width : 100%;
+	text-align:center;
+}
+
+#paginate_div a {
+	font-size : 12px;
+	color: #E2017B;
+	font-weight: bold;
+}
+
+#paginate_div a:visited {
+	font-size : 12px;
+	width : 100%;
+	text-align:center;
+	color: #E2017B;
+	font-weight: bold;
+}
+
+#paginate_div a:hover{
+	font-size : 12px;
+	width : 100%;
+	text-align:center;
+	color: #E2017B;
+	font-weight: bold;
+}
+
+#col_friends_book {
+	background: #6B9FCF;
+	font-weight: bold;
+	color :white;	
+	padding: 4px 4px 4px 10px;
+  	font-size : 12px;
+	margin-bottom:10px;
+
+}
+
+
+
+
+#col_top_five_book {
+	background: #6B9FCF;
+	font-weight: bold;
+	color :white;
+	padding: 4px 4px 4px 10px;
+	font-size : 12px;
+	margin-bottom:10px;
+	
+}
+
+#col_list_book {
+	background: #6B9FCF;
+	font-weight: bold;
+	color :white;
+	padding: 4px 4px 4px 10px;
+	font-size : 12px;
+}
+
+#social_side_books {
+	margin-left:520px;
+	width: 150;
+}
+
+#favourite_books {
+	margin-bottom:30px;
+}
+
+#favourite_books table  {
+	width: 100%;
+	text-align:center;	
+}
+
+#favourite_books table tr td {
+	text-align:center;	
+}
+
+.book_div   {
+	margin-bottom:15px;
+}
+
+#col_friends_book a {
+	font-size: 12px;
+	background: white;
+	text-decoration: underline;
+	color : red;
+}
+
+#col_friends_book a:visited {
+	font-size: 12px;
+	background: white;
+	text-decoration: underline;
+}
+
+#col_friends_book a:hover {
+	font-size: 12px;
+	background: white;
+	text-decoration: underline;
+}
+
+td, td.label  {
+font-size:10px;
+text-align:left;
+vertical-align:top;
+}
+
+.book_index_summary {
+	height:80px;
+}
+
+
+.book_actions a {
+	background: #6B9FCF;
+	color :white;
+	font-weight: bold;
+	padding: 2px;
+}
+
+.book_actions a:hover {
+	background: #6B9FCF;
+	color :white;
+	padding: 2px;
+	font-weight: bold;
+	
+}
+
+.book_actions a:visited {
+	background: #6B9FCF;
+	color :white;
+	padding: 2px;
+	font-weight: bold;
+	
+}
+
+.book_photo {
+	padding-right:8px;
+}

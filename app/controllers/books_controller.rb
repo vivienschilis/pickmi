@@ -4,8 +4,24 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.xml
   def index
-    @books = Book.paginate  :per_page => 20, :page => params['page'],
+    @books = Book.paginate  :per_page => 10, :page => params['page'],
                             :order => :title
+    
+    start = rand(@facebook_friends.size-5)
+    start = 0
+    @random_friends_using_app = []
+    @facebook_friends[start..(start+5)].each do |friend|
+      @random_friends_using_app <<  User.find_by_facebook_id(friend.uid)
+    end
+    
+ #   @top_five = Favourite.find(:all, :select => 'book_id, COUNT(*) as popularity ', :group => :book_id , :order => 'popularity DESC', :limit => 5)
+    @top_five = Book.find(:all, :joins => :favourites, :select => '*,   COUNT(*) as popularity ', :group => :book_id , :order => 'popularity DESC', :limit => 5)
+
+    # start = rand(@facebook_friends.size-5)
+    #    facebook_session.users[start..(start+5)].each do |user|
+    #      @random_user_using_app <<  User.find_by_facebook_id(friend.uid)
+    #    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @books }
@@ -93,6 +109,8 @@ class BooksController < ApplicationController
   
   
   def select
+    
+    logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     @book = Book.find(params[:id])
     @favourite = Favourite.new(:book => @book, :user => @user)
     
@@ -107,9 +125,11 @@ class BooksController < ApplicationController
   end
   
   def select_remote
+     logger.info("tessstttttttttttttttttttttttttttt")
      @book = Book.find(params[:id])
      @favourite = Favourite.new(:book => @book, :user => @user)
-     render :partial => "/favourite/profile_table"
+     render :text => "Text succeed"
+     
   end
   
   def unselect

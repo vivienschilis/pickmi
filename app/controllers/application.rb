@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_authenticated_to_facebook
   
   before_filter :get_facebook_user
-  #before_filter :get_facebook_friends
+  before_filter :get_facebook_friends
   
   def get_facebook_user
     @facebook_user = facebook_session.user
@@ -25,10 +25,8 @@ class ApplicationController < ActionController::Base
   end
   
   def get_facebook_friends
-    @friends = []
-    @facebook_user.friends.each do |friend|
-      @friends << User.find_by_facebook_id(friend.uid)
-    end
+#    @facebook_friends = facebook_session.user.friends_with_this_app
+    @facebook_friends = [] << facebook_session.user
   end
 
 end

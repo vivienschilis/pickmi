@@ -1,38 +1,50 @@
-<p>
-  <b>Title:</b>
-  <%=h @book.title %>
-</p>
+<div>
+<table id="book_show_table">
+<tr>
+	<td >
+		<%= image_tag @book.photo , :width => '150' %>
+	</td>
+	
+	<td>
+		<span id='book_show_title'><h2><%=h @book.title %></h2></span>
+		<span id='book_show_author'><h2> of <%=h @book.author %> </h2></span>
+		<p>
+			<%=h @book.summary %>
+		</p>
+		
+		<p id='book_show_info'>
+			Edition: <%=h @book.publish_at %> <br>
+			Publisher: <%=h @book.edition %>  
+		</p>
+	</td>
+<tr>	
+</table>
 
-<p>
-  <b>Price:</b>
-  <%=h number_to_currency (@book.price)  %>
-</p>
+</div>
 
-<p>
-  <b>Photo:</b>
-	<%= image_tag @book.photo %>
-</p>
+<div>
+Add a video comment
 
-<p>
-  <b>Edition:</b>
-  <%=h @book.edition %>
-</p>
-
-<p>
-  <b>Summary:</b>
-  <%=h @book.summary %>
-</p>
-
-<p>
-  <b>Author:</b>
-  <%=h @book.author %>
-</p>
-
-<p>
-  <b>Publish at:</b>
-  <%=h @book.publish_at %>
-</p>
+</div>
 
 
+	<fb:swf 
+	swfsrc='http://cdn.altomic.com/VideoStreamingClient' 
+	allowscriptaccess='all'
+	id='232' wmode='transparent'
+	flashvars="serverPath=http://www.altomic.com?domain_name=http://www.altomic.com&site=258&token=98682411&title=no&referer=3279"
+	width="290" height="320" />
+
+
+<fb:flv 
+src='http://cdn.altomic.com/n2mnos1xfcfvq8osb5jdo836i2pcok.flv' 
+width='320' height='240' 
+title='Movie Title' 
+color='#FFBB00' 
+salign='l' 
+img='http://cdn.altomic.com/n2mnos1xfcfvq8osb5jdo836i2pcok.flv_t.jpg' 
+scale='exactfit'>
+
+<br/>
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>

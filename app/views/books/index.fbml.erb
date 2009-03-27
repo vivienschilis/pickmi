@@ -1,25 +1,50 @@
-<h1>Listing books</h1>
+<h2> Ciao <%= @facebook_user.first_name @facebook_user.last_name %> </h2>
+<br/> <br>
+
+<div id='favourite_books'>
+	<%=render :partial => "favourites/profil_table" %>
+</div>
+
+
+<div id='user_side_books'>
+
+	<div id='col_list_book'>Listing books</div>
+
+	<br/> <br/>
 
 <% for book in @books %>
-<table>
-	<tr class="book">
-		<td><%= image_tag (book.photo, :size => "100x150") %></td>
-		<td><%= link_to h(book.title) , book %>
-    	<p>
-				<%=h truncate(book.summary, :length => 1000) %>
+<div class="book_div">
+<table class="book_table">
+	<tr>
+		<td class='book_photo'><%= image_tag (book.photo, :width => '80') %></td>
+		<td>
+			<div class='book_index_title' > <%= link_to book.title , book %> </div>
+    	<div class='book_index_summary'>
+			<p>
+				<%= truncate(book.summary, :length => 350, 
+				:omission => " <span class='book_index_summary_ommission'>"+ link_to ("[...]" , book) + "</span>" ) %>
 			</p>
+			</div>
+			<div class='book_actions'>
 			<%= link_to 'Mi piace', select_book_path(book), :method => :put  %>
-			<%= link_to_remote 'Mi piace', :update => "profil_table",
-			 :url => { :controller => "book", :action => "select_remote"}, 
-			 :with => "'id=' + #{book.id}"
-			%>
-			
+			</div>
 		</td>
 	</tr>
 </table>
+</div>
 <%	end %>
 
-<%= will_paginate @books %>
+<br>
+<div id="paginate_div"><%= will_paginate @books %></div>
 
-<%= link_to 'New book', new_book_path %>
+</div>
 
+<div id='social_side_books'>
+
+	<%= render :partial => "/books/friends_book.fbml.erb" %>
+	<br/> <br/>
+	<%= render :partial => "/books/top_five_book.fbml.erb" %>
+
+</div>
+
+<!-- <%= link_to 'New book', new_book_path %> -->
