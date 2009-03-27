@@ -1,0 +1,14 @@
+<div id='col_friends_book'>Friends books</div>
+
+<table>
+<% @random_friends_using_app.each do |friend|  %>	
+<tr>
+	<td><%= fb_profile_pic friend.facebook_id %></td>
+	<td>
+		<% friend.books.each do |book| %>
+			<%= link_to truncate(book.title, :length => 20), book %><br>
+		<% end %>
+	</td>
+</tr>
+<% end %>
+</table>	

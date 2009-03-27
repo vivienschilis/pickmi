@@ -1,0 +1,14 @@
+<div id='col_top_five_book'>Top 5 books</div>
+
+<table>
+<% @top_five.each_with_index do |book,i| %>	
+<tr>
+	<td><%= image_tag (book.photo, :width => '50') %></td>
+	<td><%= i+1 %>. <br/>
+	<%= truncate book.title, :length => 20 %><br/>
+	</br>
+	<%= book.popularity %> user(s)<br>
+</tr>
+<% end %>
+</table>
+
