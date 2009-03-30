@@ -16,6 +16,29 @@ table tr .book { color: #999999;}
 	padding:10px;
 }
 
+#notice {
+	border: 1px solid #FF446D;
+	width: 98%;
+	padding: 5px;
+	font-size: 14px;
+	margin-bottom: 10px;
+	margin-top:10px;
+	background: #FFCEC6;
+	text-align:center;
+	
+}
+
+#publish_proposition {
+	border: 1px solid #80FF89;
+	width: 98%;
+	padding: 5px;
+	font-size: 14px;
+	margin-bottom: 10px;
+	margin-top:10px;
+	background: #E7FFE7;
+	text-align:center;
+}
+
 #book_show_title h2 {
 	color: #6B9FCF;
 	
@@ -78,7 +101,7 @@ table tr .book { color: #999999;}
 	font-weight: bold;
 }
 
-#col_friends_book {
+#col_friends_book_ban {
 	background: #6B9FCF;
 	font-weight: bold;
 	color :white;	
@@ -89,9 +112,7 @@ table tr .book { color: #999999;}
 }
 
 
-
-
-#col_top_five_book {
+#col_top_five_book_ban {
 	background: #6B9FCF;
 	font-weight: bold;
 	color :white;
@@ -107,6 +128,8 @@ table tr .book { color: #999999;}
 	color :white;
 	padding: 4px 4px 4px 10px;
 	font-size : 12px;
+	width: 100%;
+	
 }
 
 #social_side_books {
@@ -132,22 +155,18 @@ table tr .book { color: #999999;}
 }
 
 #col_friends_book a {
-	font-size: 12px;
 	background: white;
-	text-decoration: underline;
-	color : red;
+	color:black;
 }
 
 #col_friends_book a:visited {
-	font-size: 12px;
 	background: white;
-	text-decoration: underline;
+	color:black;	
 }
 
 #col_friends_book a:hover {
-	font-size: 12px;
 	background: white;
-	text-decoration: underline;
+	color:black;
 }
 
 td, td.label  {
@@ -178,12 +197,54 @@ vertical-align:top;
 
 .book_actions a:visited {
 	background: #6B9FCF;
-	color :white;
+	color: white;
 	padding: 2px;
 	font-weight: bold;
 	
 }
 
 .book_photo {
-	padding-right:8px;
+	padding-right: 8px;
+}
+
+#book_search_form {
+	width: 100%;
+	padding: 4px 4px 4px 10px;
+	font-size : 12px;
+	background: #EBEBEB
+}
+
+#application_title {
+	color: #E2017B;
+	font-weight: bold;
+	width:100%;
+	text-align:center;
+	padding:10px;
+	font-size:28px;
+}
+
+#application_title a{
+	color: #E2017B;
+	font-weight: bold;
+}
+
+#application_title a:hover{
+	color: #E2017B;
+	font-weight: bold;
+}
+
+#application_title a:visited{
+
+}
+
+
+#book_search_form input {
+	
+}
+
+
+#profil_table .image_delete_book {
+	display: block;
+	text-align: right;
+	position: absolute;
 }

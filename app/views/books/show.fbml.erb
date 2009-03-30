@@ -6,7 +6,7 @@
 	</td>
 	
 	<td>
-		<span id='book_show_title'><h2><%=h @book.title %></h2></span>
+		<span id='book_show_title'><h2><%= @book.title %></h2></span>
 		<span id='book_show_author'><h2> of <%=h @book.author %> </h2></span>
 		<p>
 			<%=h @book.summary %>
@@ -27,24 +27,5 @@ Add a video comment
 
 </div>
 
-
-	<fb:swf 
-	swfsrc='http://cdn.altomic.com/VideoStreamingClient' 
-	allowscriptaccess='all'
-	id='232' wmode='transparent'
-	flashvars="serverPath=http://www.altomic.com?domain_name=http://www.altomic.com&site=258&token=98682411&title=no&referer=3279"
-	width="290" height="320" />
-
-
-<fb:flv 
-src='http://cdn.altomic.com/n2mnos1xfcfvq8osb5jdo836i2pcok.flv' 
-width='320' height='240' 
-title='Movie Title' 
-color='#FFBB00' 
-salign='l' 
-img='http://cdn.altomic.com/n2mnos1xfcfvq8osb5jdo836i2pcok.flv_t.jpg' 
-scale='exactfit'>
-
 <br/>
-<%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>

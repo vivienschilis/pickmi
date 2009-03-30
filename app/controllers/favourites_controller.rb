@@ -8,5 +8,4 @@ class FavouritesController < ApplicationController
      format.fbml # index.fbml.erb
    end
  end
- 
 end

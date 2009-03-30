@@ -1,6 +1,6 @@
 module Facebooker
   module Feed
-    METHODS = {'Action' => 'facebook.feed.publishActionOfUser', 'Story' => 'facebook.feed.publishStoryToUser',
+    METHODS = {'Action' => 'facebook.feed.publishActionOfUser', 'Story' => 'facebook.feed.publishUserAction',
                'TemplatizedAction' => 'facebook.feed.publishTemplatizedAction' }
 
     class ActionBase

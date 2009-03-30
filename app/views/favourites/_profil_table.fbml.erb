@@ -1,11 +1,13 @@
 <table id="profil_table">
 <% 5.times do |i| %>
 <td>
-	<%= 
-		unless @user.books[i].nil?
-			image_tag @user.books[i].photo, :size => "100x150" 
-		end
-	%>
+	<% unless @user.books[i].nil? %>
+		<% 	image_delete_book = image_tag 'delete.png' ,:width => '20', :class => 'image_delete_book' %> 
+		<%= link_to image_delete_book, unselect_book_path(@user.books[i]), :method => :put   %> 
+		<%= image_tag @user.books[i].photo, :size => "100x150" %>	 
+	<% else %>
+		<%= image_tag 'not_available.png', :size => "100x150" %>	 
+	<% end %>
 </td>
 <% end %>
 </table>

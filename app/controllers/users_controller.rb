@@ -8,5 +8,5 @@ class UsersController < ApplicationController
      format.fbml # index.fbml.erb
    end
  end
- 
+
 end

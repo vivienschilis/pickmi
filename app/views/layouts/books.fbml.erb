@@ -1,6 +1,11 @@
 <%= javascript_include_tag "facebook" %>
 <%= stylesheet_link_tag 'book' %>
 
+<div id='application_title'> <%= link_to 'PICKMI - CHOOSE YOUR FIVE FAVOURITE BOOKS', root_url %>  </div>
+<br/>
+<% unless flash[:notice].nil? %>
+<div id='notice'> <%= flash[:notice] %> </div>
+<% end %>
 
 
 <%= yield  %>

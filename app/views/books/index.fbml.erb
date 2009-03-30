@@ -1,5 +1,4 @@
-<h2> Ciao <%= @facebook_user.first_name @facebook_user.last_name %> </h2>
-<br/> <br>
+<% if !flash[:should_publish] %> <div id='publish_proposition'> <%= link_to 'Publish', publish_books_url %> </div> <% end %>
 
 <div id='favourite_books'>
 	<%=render :partial => "favourites/profil_table" %>
@@ -7,8 +6,16 @@
 
 
 <div id='user_side_books'>
-
+	
 	<div id='col_list_book'>Listing books</div>
+	<div id="book_search_form"> 
+			
+	<% form_tag books_path, :method => 'get' do %>
+		Search : 
+	    <%= text_field_tag :search, params[:search] %>
+	<% end %>
+	
+	</div>
 
 	<br/> <br/>
 
@@ -26,7 +33,11 @@
 			</p>
 			</div>
 			<div class='book_actions'>
+			<% if book.is_a_favourite?(@user) %>
+			<%= link_to 'Non Mi piace', unselect_book_path(book), :method => :put  %>
+			<% else %>
 			<%= link_to 'Mi piace', select_book_path(book), :method => :put  %>
+			<% end %>
 			</div>
 		</td>
 	</tr>
@@ -39,12 +50,15 @@
 
 </div>
 
+
 <div id='social_side_books'>
 
-	<%= render :partial => "/books/friends_book.fbml.erb" %>
+	<div id='col_friends_book'>
+		<%= render :partial => "/books/friends_book.fbml.erb" %>
+	</div>
+	
 	<br/> <br/>
-	<%= render :partial => "/books/top_five_book.fbml.erb" %>
-
+	<div id='col_top_five_book'>
+		<%= render :partial => "/books/top_five_book.fbml.erb" %>
+	</div>
 </div>
-
-<!-- <%= link_to 'New book', new_book_path %> -->
