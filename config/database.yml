@@ -18,7 +18,7 @@ test:
 production:
   adapter: mysql
   database: pickmi_development
-  username: rails
-  password: rails111
+  username: root
+  password: sqlroot
   pool: 5
   timeout: 5000
