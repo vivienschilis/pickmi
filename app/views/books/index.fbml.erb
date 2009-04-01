@@ -1,52 +1,124 @@
-<% if !flash[:should_publish] %> <div id='publish_proposition'> <%= link_to 'Publish', publish_books_url %> </div> <% end %>
+<%= javascript_include_tag 'facebook' %>
+<%= javascript_include_tag 'pickmi' %>
 
-<div id='favourite_books'>
-	<%=render :partial => "favourites/profil_table" %>
+
+<div id='table_five_books'>
+<table>
+    <tr>
+        <td id="td1" class="number" onclick="five_books.cellClicked(1);" 
+								onmouseover="five_books.cellOver(1)" onmouseout="five_books.cellOut(1)" style="width: 20%;">
+          #1
+        </td>
+
+				<td id="td2" class="number" onclick="five_books.cellClicked(2);" 
+								onmouseover="five_books.cellOver(2)" onmouseout="five_books.cellOut(2)" style="width: 20%;">
+          #2
+        </td>
+
+				<td id="td3" class="number" onclick="five_books.cellClicked(3);" 
+								onmouseover="five_books.cellOver(3)" onmouseout="five_books.cellOut(3)" style="width: 20%;">
+          #3
+        </td>
+
+				<td id="td4" class="number" onclick="five_books.cellClicked(4);" 
+								onmouseover="five_books.cellOver(4)" onmouseout="five_books.cellOut(4)" style="width: 20%;">
+          #4
+        </td>
+
+				<td id="td5" class="number" onclick="five_books.cellClicked(5);" 
+								onmouseover="five_books.cellOver(5)" onmouseout="five_books.cellOut(5)" style="width: 20%;">
+          #5
+        </td>
+    </tr>
+</table>
+
+<div id='dynamic_search'>
+<% form_tag books_path, :method => 'get' do %>
+<%= text_field_tag :dsearch, params[:dsearch] ,  :autocomplete => "off" , :size => 80 %>
+<% end %>
 </div>
 
+<!--
+<div id='favourite_books'>
+	<#=render :partial => "favourites/profil_table" %>
+</div>
+-->
+
+<div id='publish_proposition' style='display:none'><%= link_to 'Publish', publish_books_url %></div>
+
+<br/></br>
 
 <div id='user_side_books'>
 	
 	<div id='col_list_book'>Listing books</div>
-	<div id="book_search_form"> 
-			
-	<% form_tag books_path, :method => 'get' do %>
-		Search : 
-	    <%= text_field_tag :search, params[:search] %>
-	<% end %>
 	
+	<div id="book_search_form"> 			
+	<% form_tag books_path, :method => 'get' do %>
+		Search : <%= text_field_tag :search, params[:search], :autocomplete => "off" %>
+	<% end %>
 	</div>
 
+	<script>
+			five_books = new FiveBooks;
+		//	five_books.cellClicked(1);
+
+			<%  @user.books.each_with_index do |book,i| %>
+				five_books.loadBook(<%= book.id %>, 'blah' , <%= i+1 %> );
+			<% end %>
+		
+			var suggestr = new ajaxSuggestFbml(document.getElementById('dsearch'),
+					{
+	            preMsgTxt: "Search a book by his title ...", 
+	            menuOpacity: 94,
+	            ajaxUrl: "http://pickmi.mikamai.com:4008" + "/books/auto_complete_for_book_title",    
+	            focus: true, 
+							onSelect: function(result, index) {  // handler for hitting the 'enter' key
+										five_books.addBook(index,result);
+										five_books.nextCell();
+		          },
+	            delayTime: 700,   // amount of idle time after a keypress before making the ajax call
+	            clearOnEnter: false   // whether or not to clear the text after they hit enter
+	        }
+			);
+	</script>
+	
 	<br/> <br/>
 
-<% for book in @books %>
-<div class="book_div">
-<table class="book_table">
-	<tr>
-		<td class='book_photo'><%= image_tag (book.photo, :width => '80') %></td>
-		<td>
-			<div class='book_index_title' > <%= link_to book.title , book %> </div>
-    	<div class='book_index_summary'>
-			<p>
-				<%= truncate(book.summary, :length => 350, 
-				:omission => " <span class='book_index_summary_ommission'>"+ link_to ("[...]" , book) + "</span>" ) %>
-			</p>
-			</div>
-			<div class='book_actions'>
-			<% if book.is_a_favourite?(@user) %>
-			<%= link_to 'Non Mi piace', unselect_book_path(book), :method => :put  %>
-			<% else %>
-			<%= link_to 'Mi piace', select_book_path(book), :method => :put  %>
-			<% end %>
-			</div>
-		</td>
-	</tr>
-</table>
-</div>
-<%	end %>
+	<% for book in @books %>
+		<div class="book_div">
+			<table class="book_table">
+				<tr>
+					<td class='book_photo'><%= image_tag (book.photo, :width => '80') %></td>
+					<td>
+						<div class='book_index_title' > <%= link_to book.title ,
+									book_url(book) + '?' + {:page => params[:page] }.to_query  %>
+						</div>
+			    	<div class='book_index_summary'>
+						<p>
+							<%= truncate(book.summary, :length => 350, 
+							:omission => " <span class='book_index_summary_ommission'>"+ link_to ("[...]" , book) + "</span>" ) %>
+						</p>
+						<br/>
+						Scritto da 
+						<%= book.author %>
+			
+						<!--<div class='book_actions'>
+						<# if book.is_a_favourite?(@user) %>
+						<#= link_to 'Non Mi piace', unselect_book_path(book), :method => :put  %>
+						<# else %>
+						<#= link_to 'Mi piace', select_book_path(book), :method => :put  %>
+						<# end %>
+						</div> -->
+			
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	<%	end %>
 
-<br>
-<div id="paginate_div"><%= will_paginate @books %></div>
+	<br/>
+	<div id="paginate_div"><%= will_paginate @books %></div>
 
 </div>
 
@@ -57,8 +129,10 @@
 		<%= render :partial => "/books/friends_book.fbml.erb" %>
 	</div>
 	
-	<br/> <br/>
+	<br/><br/>
+	
 	<div id='col_top_five_book'>
 		<%= render :partial => "/books/top_five_book.fbml.erb" %>
 	</div>
+	
 </div>

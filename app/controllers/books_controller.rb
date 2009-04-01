@@ -21,7 +21,7 @@ class BooksController < ApplicationController
   
   def index
 
-    @books = Book.search ( params['search'], params['page'])
+    @books = Book.search (params['search'], params['page'])
     
     respond_to do |format|
       format.html # index.html.erb
@@ -37,13 +37,22 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html  # show.html.erb
       format.xml  { render :xml => @book }
-      format.fbml 
+      format.json  { logger.info ('AAAAA')
+          render :text => @book.to_json (:only => [:id, :title, :photo]) }
+      format.fbml
       
     end
   end
 
+
+  def describe
+    @book = Book.find_by_id(params[:id])
+#    render :text => @book.to_json (:only => [:id, :title, :photo])
+    render :partial => '/books/book.fbml.erb'
+  end
+  
   # GET /books/new
   # GET /books/new.xml
   # def new
@@ -109,38 +118,49 @@ class BooksController < ApplicationController
   # end
   
 
-  def select
-
-    @book = Book.find(params[:id])
-
-    # More than 5 books
-    if @user.books.size >= 5
-      flash[:notice] = "You can't choose more than 5 books!"
-      redirect_to(books_url)
-    else
-      @favourite = Favourite.new(:book => @book, :user => @user)
-      respond_to do |format|
-        if @favourite.save
-          
-          #propose to publish your 5 books
-          if @user.books.size == 5
-            flash[:should_publish] = true
-          end
-                    
-          format.fbml { redirect_to(books_url) }
-        else
-          flash[:notice] = 'Sorry, An error occured!'
-          format.fbml { redirect_to(books_url) }
-        end
-      end
-    end
-  end
+  # def select
+  # 
+  #   @book = Book.find(params[:id])
+  # 
+  #   # More than 5 books
+  #   if @user.books.size >= 5
+  #     flash[:notice] = "You can't choose more than 5 books!"
+  #     redirect_to(books_url)
+  #   else
+  #     @favourite = Favourite.new(:book => @book, :user => @user)
+  #     respond_to do |format|
+  #       if @favourite.save
+  #         
+  #         #propose to publish your 5 books
+  #         if @user.books.size == 5
+  #           flash[:should_publish] = true
+  #         end
+  #                   
+  #         format.fbml { redirect_to(books_url) }
+  #       else
+  #         flash[:notice] = 'Sorry, An error occured!'
+  #         format.fbml { redirect_to(books_url) }
+  #       end
+  #     end
+  #   end
+  # end
   
   def select_remote
-     @book = Book.find(params[:id])
-     @favourite = Favourite.new(:book => @book, :user => @user)
-     render :text => "Text succeed"
-     
+    
+
+    unless params[:book_old_id].nil?
+      @book_old = Book.find(params[:book_old_id])
+      f = Favourite.find_by_book_id_and_user_id(@book_old,@user)
+      f.destroy
+    end  
+    
+    unless params[:book_id].nil?
+      @book = Book.find(params[:book_id])
+      f2 = Favourite.new(:book => @book, :user => @user)
+      f2.save
+    end
+    
+    render :text => "OK"
   end
   
   # def unselect
@@ -152,7 +172,7 @@ class BooksController < ApplicationController
   #     format.fbml { redirect_to(books_url) }
   #   end
   # end
-  # 
+  
   # def unselect_remote
   #   @book = Book.find(params[:id])
   #   @favourite = Favourite.find_by_book_id_and_user_id(@book,@user)
@@ -161,13 +181,22 @@ class BooksController < ApplicationController
   # end
   # 
   # 
-  # def auto_complete_for_book_title
-  #   titles = Book.find(:all,
-  #     :conditions => [ 'LOWER(title) LIKE ?', params[:suggest_typed].downcase + '%'],
-  #     :order => 'thing ASC',
-  #     :limit => 10).map { |n| n.title }
-  #   render :text => "{fortext:#{params[:suggest_typed].to_json},results:#{titles.to_json}}"
-  # end
+   def auto_complete_for_book_title
+      if params[:suggest_typed].nil? ||  params[:suggest_typed] == ''
+       render :text => ""
+      else
+        books = Book.find(:all,
+          :conditions => [ 'LOWER(title) LIKE ? and books.id not in (select book_id from favourites where user_id = ?)',
+                            '%'+params[:suggest_typed].downcase+'%', @user.id],
+          :order => 'title ASC',
+          :limit => 10)
+        
+        titles = books.map { |n| n.title }
+        ids = books.map { |n| n.id }
+        
+        render :text => "{fortext:#{params[:suggest_typed].to_json},results:#{titles.to_json},indexs:#{ids.to_json}}"
+      end
+   end
 
   def publish
 

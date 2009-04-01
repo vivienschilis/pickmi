@@ -3,6 +3,9 @@
 <tr>
 	<td >
 		<%= image_tag @book.photo , :width => '150' %>
+		<br/> <br/>			
+		
+		<b><%= link_to '<< indietro', books_path + '?' + {:page => params[:page] }.to_query  %></b>
 	</td>
 	
 	<td>
@@ -13,8 +16,9 @@
 		</p>
 		
 		<p id='book_show_info'>
-			Edition: <%=h @book.publish_at %> <br>
-			Publisher: <%=h @book.edition %>  
+			Edition: <%=h @book.publish_at %> <br/>
+			Publisher: <%=h @book.edition %>  <br/><br/>
+			<% unless @book.pick_url.nil? %> <%= link_to 'Vedi su PickWicki', @book.pick_url %> <% end %>
 		</p>
 	</td>
 <tr>	
@@ -22,10 +26,4 @@
 
 </div>
 
-<div>
-Add a video comment
-
-</div>
-
 <br/>
-<%= link_to 'Back', books_path %>

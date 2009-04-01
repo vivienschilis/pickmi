@@ -110,6 +110,10 @@ ajaxSuggestFbml.prototype.onkeydown = function(event) {
 			if (this.results[this.selectedindex]) {
 				this.obj.addClassName('suggest_found')
 					.setValue(this.results[this.selectedindex]);
+				
+					if(this.options!=null && this.options.onSelect!=null)
+						this.options.onSelect(this.results[this.selectedindex],this.indexs[this.selectedindex]);
+										
 				this.hide();
 				event.preventDefault();
 			}
@@ -126,6 +130,7 @@ ajaxSuggestFbml.prototype.onkeydown = function(event) {
 			break;
 	}
 };
+
 
 // Override these events so they don't actually do anything
 ajaxSuggestFbml.prototype.onkeypress = function(event) {
@@ -158,12 +163,15 @@ ajaxSuggestFbml.prototype.select = function(index) {
 ajaxSuggestFbml.prototype.onajaxdone = function(data) {
 	// save to the cache
 	this.cache[data.fortext].results = data.results;
-	this.cache[data.fortext].curRequest = null;
+	this.cache[data.fortext].indexs = data.indexs;
 	
+	this.cache[data.fortext].curRequest = null;
+		
 	// if its valid, update the UI
 	if(this.get_norm_typed() == data.fortext) {
-		this.draw_results(data.results, data.fortext);
+		this.draw_results(data.results, data.fortext, data.indexs);
 		this.results = data.results;
+		this.indexs = data.indexs;
 	}
 };
 
@@ -175,21 +183,28 @@ ajaxSuggestFbml.prototype.getValue = function() {
 	return (this.preMsg?"":this.obj.getValue());
 };
 
-ajaxSuggestFbml.prototype.draw_results = function(results, typed) {
+ajaxSuggestFbml.prototype.draw_results = function(results, typed, indexs) {
 	this.list.setTextValue('');
 	if(results == null)
 		return;
 	for( var i = 0; i < results.length; i++ ) {
 		var item = document.createElement('div').setClassName('suggest_suggestion');
 
-		item.addEventListener('mouseover', 
+
+		item.addEventListener('mousedown', 
 					function() {
 						this[0].select(this[1]); 
 					}.bind([this, i]));
+					
 		item.addEventListener('mousedown', 
 					function(event) {
 						this.obj.addClassName('suggest_found');
 	 					this.obj.setValue(this.results[this.selectedindex]);
+	
+						if(this.options!=null && this.options.onSelect!=null)
+							this.options.onSelect(this.results[this.selectedindex],this.indexs[this.selectedindex]);
+	
+//						five_books.addBook(this.indexs[this.selectedindex]);
 						this.hide();  
 					}.bind(this));
 
@@ -205,6 +220,7 @@ ajaxSuggestFbml.prototype.draw_results = function(results, typed) {
 			item.appendChild(em_item);
 
 			var span_item = document.createElement('span').setTextValue(results[i].substring(begins + typed.length));
+
 			item.appendChild(span_item);
 		}
 		this.list.appendChild(item);
@@ -231,8 +247,9 @@ ajaxSuggestFbml.prototype.update_results = function() {
 	
 	if(this.cache[val] != null) {
 		// pull from el cache
-		this.draw_results(this.cache[val].results,val);
+		this.draw_results(this.cache[val].results,val, this.cache[val].indexs);
 		this.results = this.cache[val].results;
+		this.indexs =  this.cache[val].indexs;
 		
 	} else if(this.cache[val] == null || this.cache[val].curRequest == null){
 		if(this.requestTimer != null)

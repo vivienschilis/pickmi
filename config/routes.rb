@@ -2,10 +2,23 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root    :controller => "books"
 
+
+  map.connect '/books/auto_complete_for_book_title', :controller=>"books", :action=>"auto_complete_for_book_title"
+  map.select_remote_books '/books/select_remote', :controller=>"books", :action=>"select_remote"
+  map.describe_books '/books/:id/describe' , :controller=>"books", :action=>"describe"
+  map.publish_books '/books/publish', :controller=>"books", :action=>"publish"
+
+#  map.unselect_book '/books/:id/unselect_book', :controller=>"books", :action=>"unselect"
+#  map.select_book '/books/:id/select_book', :controller=>"books", :action=>"select"
+
+  map.books '/books', :controller=>"books", :action=>"index"
+  map.book '/books/:id', :controller=>"books", :action=>"show"
+  map.formatted_book '/books/:id.:format', :controller=>"books", :action=>"show"
+
+    
   map.resources :favourites
-  map.resources :books, :member => { :select => :any , :unselect => :any } ,
-                        :collection => {:publish => :any }
   map.resources :users 
+
 
   # The priority is based upon order of creation: first created -> highest priority.
 

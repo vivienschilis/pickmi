@@ -238,13 +238,18 @@ vertical-align:top;
 }
 
 
-#book_search_form input {
-	
-}
 
 
 #profil_table .image_delete_book {
 	display: block;
 	text-align: right;
 	position: absolute;
+}
+
+#dynamic_search {
+	background:#EEEEEE;
+	color:#BBBBBB;
+	padding:4px;
+	text-align:center;
+	width:100%;
 }

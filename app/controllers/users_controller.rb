@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
  def index  
-   @users = facebook_session.user.friends
+   #@users = facebook_session.user.friends
 
    respond_to do |format|
      format.html # index.html.erb

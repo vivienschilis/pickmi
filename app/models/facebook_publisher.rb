@@ -11,17 +11,15 @@ class FacebookPublisher < Facebooker::Rails::Publisher
     fbml "has choosen his 5 favourite books. #{link_to('Choose yours' , root_url) } "
   end
 
-  def book_choosen_feed_template 
-    one_line_story_template("{*actor*} ha publicato i sui cinque libri favoriti 2")
+  def book_choosen_feed_template
+    
+    one_line_story_template("{*actor*} ha publicato i sui cinque libri favoriti")
 
     short_story_template("{*actor*} ha publicato i sui cinque libri favoriti",
-                      "1")
-  
-    full_story_template("{*actor*} ha publicato i sui cinque libri favoriti",
-                      "2")
+                    "Qui i cinque libri ")
 
-#    full_story_template("{*actor*} ha publicato i sui cinque libri favoriti",
- #                     "1{*image_0*}2{*image_1*}3{*image_2*}4{*image_3*}5{*image_4*}")
+    full_story_template("{*actor*} ha publicato i sui cinque libri favoriti",
+                      "Qui i cinque libri ")
 
   end 
   
@@ -31,17 +29,20 @@ class FacebookPublisher < Facebooker::Rails::Publisher
     victim = Facebooker::User.new(user.uid) 
     attacker = Facebooker::User.new(user.uid) 
     send_as :user_action 
-    story_size SHORT
     from attacker
-    data({ 
-      :images => [{:href => "http://www.google.fr/intl/fr_fr/images/logo.gif" }]  
-    })
-    # :image_0 => image_tag (fb_user.books[0].photo, :width => '15'),
-    #       :image_1 => image_tag (fb_user.books[1].photo, :width => '15'),
-    #       :image_2 => image_tag (fb_user.books[2].photo, :width => '15'),
-    #       :image_3 => image_tag (fb_user.books[3].photo, :width => '15'),
-    #       :image_4 => image_tag (fb_user.books[4].photo, :width => '15')
-    #
+    
+    # data({ 
+    #   :image_0 => image_tag (fb_user.books[0].photo, :width => '15'),
+    #   :image_1 => image_tag (fb_user.books[1].photo, :width => '15'),
+    #   :image_2 => image_tag (fb_user.books[2].photo, :width => '15'),
+    #   :image_3 => image_tag (fb_user.books[3].photo, :width => '15'),
+    #   :image_4 => image_tag (fb_user.books[4].photo, :width => '15')
+    # })
+    
+    logger.info("PHOOOOOOTO"+ image(fb_user.books.first.photo, root_url ).to_s)
+    data :images => [ image(fb_user.books.first.photo, root_url) ]
+
+    
   end
   
 end

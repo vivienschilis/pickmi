@@ -6,7 +6,9 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => '051a8150465afe2e29497df7a17e20da'
+    
+  protect_from_forgery :except => [:auto_complete_for_book_title, :select_remote, :describe]
+  # :secret => '051a8150465afe2e29497df7a17e20da'
   
   # See ActionController::Base for details 
   # Uncomment this to filter the contents of submitted sensitive data parameters
@@ -25,8 +27,8 @@ class ApplicationController < ActionController::Base
   end
   
   def get_facebook_friends
-#    @facebook_friends = facebook_session.user.friends_with_this_app
-    @facebook_friends = [] << facebook_session.user
+    @facebook_friends = facebook_session.user.friends_with_this_app
+    #@facebook_friends = [] << facebook_session.user
   end
 
 end

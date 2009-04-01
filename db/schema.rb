@@ -13,15 +13,19 @@ ActiveRecord::Schema.define(:version => 20090330114357) do
 
   create_table "books", :force => true do |t|
     t.string   "title"
-    t.float    "price"
+    t.string   "subtitle"
     t.string   "photo"
     t.string   "edition"
     t.string   "summary"
     t.string   "author"
+    t.string   "editor"
+    t.float    "price"
     t.date     "publish_at"
+    t.integer  "pages"
+    t.integer  "isbn"
+    t.string   "pick_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "isbn"
   end
 
   create_table "facebook_templates", :force => true do |t|
