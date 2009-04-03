@@ -18,6 +18,10 @@ function ajaxSuggestFbml(obj, options) {
 					display: 'none'});
 	this.obj.getParentNode().appendChild(this.list);
 
+	if (document.getElementById('spinner'))
+        	document.getElementById('spinner').setStyle('display','none');
+
+
 	// Various flags
 	this.focused = true;
 	this.options = options == null ? {} : options;
@@ -161,6 +165,10 @@ ajaxSuggestFbml.prototype.select = function(index) {
 };
 
 ajaxSuggestFbml.prototype.onajaxdone = function(data) {
+
+	if (document.getElementById('spinner'))
+		document.getElementById('spinner').setStyle('display','none');
+
 	// save to the cache
 	this.cache[data.fortext].results = data.results;
 	this.cache[data.fortext].indexs = data.indexs;
@@ -190,7 +198,7 @@ ajaxSuggestFbml.prototype.draw_results = function(results, typed, indexs) {
 	for( var i = 0; i < results.length; i++ ) {
 		var item = document.createElement('div').setClassName('suggest_suggestion');
 
-
+		
 		item.addEventListener('mousedown', 
 					function() {
 						this[0].select(this[1]); 
@@ -233,11 +241,19 @@ ajaxSuggestFbml.prototype.send_ajrequest = function(val) {
 		
 	request.requireLogin = false;
 	request.responseType = Ajax.JSON;
-	request.onerror = function() {/* meh */};
+
+	request.onerror = function () {
+	 	if (document.getElementById('spinner'))
+        		document.getElementById('spinner').setStyle('display','none');
+	}
+
 	request.ondone = this.onajaxdone.bind(this);
 
 	this.cache[val] = {curRequest: request};
 	this.cache[val].curRequest.post(this.options.ajaxUrl, {suggest_typed: val});
+
+	if (document.getElementById('spinner'))
+		document.getElementById('spinner').setStyle('display','block');
 };
 
 // This is called every keypress to update the suggestions

@@ -2,13 +2,15 @@
 
 <table>
 <% @random_friends_using_app.each do |friend|  %>	
+<% unless friend.nil? %>
 <tr>
 	<td><%= fb_profile_pic friend.facebook_id %></td>
-	<td>
+	<td style=" width:100%; text-align:left" >
 		<% friend.books.each do |book| %>
 			<%= link_to truncate(book.title, :length => 30), book %><br>
 		<% end %>
 	</td>
 </tr>
+<% end %>
 <% end %>
 </table>	

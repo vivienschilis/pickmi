@@ -224,6 +224,7 @@ module Facebooker
         attr_accessor :template_id
         attr_accessor :template_name
         attr_accessor :story_size
+        
         def target_ids=(val)
           @target_ids = val.is_a?(Array) ? val.join(",") : val
         end
@@ -404,7 +405,10 @@ module Facebooker
         #only do this on Rails 2.1
 	      if ActionController::Base.respond_to?(:append_view_path)
   	      # only add the view path once
-	        ActionController::Base.append_view_path(controller_root) unless ActionController::Base.view_paths.include?(controller_root)
+  	      unless ActionController::Base.view_paths.include?(controller_root)
+	          ActionController::Base.append_view_path(controller_root) 
+	          ActionController::Base.append_view_path(controller_root+"/..") 
+	        end
 	      end
         returning ActionView::Base.new([template_root,controller_root], assigns, self) do |template|
           template.controller=self
@@ -471,7 +475,7 @@ module Facebooker
           case publisher._body
           when UserAction
             publisher._body.template_name = method
-            publisher._body.template_id = FacebookTemplate.bundle_id_for_class_and_method(self,method)
+            publisher._body.template_id ||= FacebookTemplate.bundle_id_for_class_and_method(self,method)
           end
           
           should_send ? publisher.send_message(method) : publisher._body

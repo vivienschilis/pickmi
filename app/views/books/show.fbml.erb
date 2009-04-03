@@ -2,7 +2,7 @@
 <table id="book_show_table">
 <tr>
 	<td >
-		<%= image_tag @book.photo , :width => '150' %>
+		<%= image_tag @book.photo_s3 , :width => '150' %>
 		<br/> <br/>			
 		
 		<b><%= link_to '<< indietro', books_path + '?' + {:page => params[:page] }.to_query  %></b>
@@ -12,12 +12,12 @@
 		<span id='book_show_title'><h2><%= @book.title %></h2></span>
 		<span id='book_show_author'><h2> of <%=h @book.author %> </h2></span>
 		<p>
-			<%=h @book.summary %>
+			<%= @book.summary %>
 		</p>
 		
 		<p id='book_show_info'>
-			Edition: <%=h @book.publish_at %> <br/>
-			Publisher: <%=h @book.edition %>  <br/><br/>
+			Edition: <%=h @book.edition %> <br/>
+			Editor: <%=h @book.editor %>  <br/><br/>
 			<% unless @book.pick_url.nil? %> <%= link_to 'Vedi su PickWicki', @book.pick_url %> <% end %>
 		</p>
 	</td>

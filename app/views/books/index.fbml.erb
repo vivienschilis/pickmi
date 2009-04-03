@@ -3,6 +3,8 @@
 
 
 <div id='table_five_books'>
+
+<div id='my_five_books'>
 <table>
     <tr>
         <td id="td1" class="number" onclick="five_books.cellClicked(1);" 
@@ -31,10 +33,13 @@
         </td>
     </tr>
 </table>
+</div>
 
 <div id='dynamic_search'>
 <% form_tag books_path, :method => 'get' do %>
-<%= text_field_tag :dsearch, params[:dsearch] ,  :autocomplete => "off" , :size => 80 %>
+<table><tr><td> Search </td><td><%= text_field_tag :dsearch, params[:dsearch] ,  :autocomplete => "off" , :size => 95 %></td>
+<td style='text-align:center'><span style='display:none' id='spinner' ><%= image_tag 'spinner.gif' %></span></td>
+</tr></table>
 <% end %>
 </div>
 
@@ -59,18 +64,17 @@
 	</div>
 
 	<script>
-			five_books = new FiveBooks;
-		//	five_books.cellClicked(1);
+			five_books = new FiveBooks( {callback_url: "<%=@callback_url%>" } );
 
 			<%  @user.books.each_with_index do |book,i| %>
-				five_books.loadBook(<%= book.id %>, 'blah' , <%= i+1 %> );
+				five_books.loadBook(<%= book.id %>, "<%= h book.title %>" , <%= i+1 %> );
 			<% end %>
 		
 			var suggestr = new ajaxSuggestFbml(document.getElementById('dsearch'),
 					{
 	            preMsgTxt: "Search a book by his title ...", 
 	            menuOpacity: 94,
-	            ajaxUrl: "http://pickmi.mikamai.com:4008" + "/books/auto_complete_for_book_title",    
+	            ajaxUrl: "<%=@callback_url%>" + "books/auto_complete_for_book_title",    
 	            focus: true, 
 							onSelect: function(result, index) {  // handler for hitting the 'enter' key
 										five_books.addBook(index,result);
@@ -88,8 +92,8 @@
 		<div class="book_div">
 			<table class="book_table">
 				<tr>
-					<td class='book_photo'><%= image_tag (book.photo, :width => '80') %></td>
-					<td>
+					<td class='book_photo'><%= image_tag (book.photo_s3, :width => '80') %></td>
+					<td class='book_detail'>
 						<div class='book_index_title' > <%= link_to book.title ,
 									book_url(book) + '?' + {:page => params[:page] }.to_query  %>
 						</div>

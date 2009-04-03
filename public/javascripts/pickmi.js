@@ -16,6 +16,8 @@ FiveBooks.prototype.cellClicked = function(id) {
 		document.getElementById('dsearch').setValue(this.books_title[id])
 	else
 		document.getElementById('dsearch').setValue('')
+
+	document.getElementById('dsearch').focus();
 	
 }
 
@@ -38,7 +40,7 @@ FiveBooks.prototype.addBook = function(book_id, title) {
 		'book_old_id': old_book_id
 	}
 	ajax.responseType = Ajax.FBML;
-	ajax.post('http://pickmi.mikamai.com:4008/books/select_remote', queryParams );
+	ajax.post(this.options.callback_url + 'books/select_remote', queryParams );
 }
 
 FiveBooks.prototype.initAll = function() {
@@ -89,7 +91,7 @@ FiveBooks.prototype.loadBook = function(book_id, title, indice) {
 		}
 	}
 	
-	ajax.post('http://pickmi.mikamai.com:4008/books/' + book_id + '/describe');
+	ajax.post(this.options.callback_url + 'books/' + book_id + '/describe');
 	
 	if (this.getSize() == 5)
 		document.getElementById('publish_proposition').setStyle('display', 'block');
@@ -108,5 +110,5 @@ FiveBooks.prototype.onFinish = function() {
 	ajax.responseType = Ajax.FBML;
 	ajax.requireLogin = 0;    
 	ajax.ondone = function(data) {}
-	ajax.post('http://pickmi.mikamai.com:4008/books/select_remote', queryParams );
+	ajax.post(this.options.callback_url + 'books/select_remote', queryParams );
 }

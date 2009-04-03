@@ -28,6 +28,11 @@ table tr .book { color: #999999;}
 	
 }
 
+
+#my_five_books td {
+	vertical-align:middle;
+}
+
 #publish_proposition {
 	border: 1px solid #80FF89;
 	width: 98%;
@@ -203,6 +208,10 @@ vertical-align:top;
 	
 }
 
+.book_detail {
+	width:100%
+}
+
 .book_photo {
 	padding-right: 8px;
 }
@@ -238,18 +247,26 @@ vertical-align:top;
 }
 
 
-
-
 #profil_table .image_delete_book {
 	display: block;
 	text-align: right;
 	position: absolute;
 }
 
+
 #dynamic_search {
 	background:#EEEEEE;
 	color:#BBBBBB;
-	padding:4px;
-	text-align:center;
 	width:100%;
+}
+
+
+#dynamic_search td {
+	padding : 2px;
+}
+
+#dynamic_search td, td.label, img {
+	vertical-align:middle;
+	text-align:center;
+	align:center;
 }

@@ -21,6 +21,11 @@ class BooksController < ApplicationController
   
   def index
 
+    facebooker_yaml_file = "#{RAILS_ROOT}/config/facebooker.yml"
+    facebooker = YAML.load_file(facebooker_yaml_file)[RAILS_ENV]
+    @callback_url = facebooker['callback_url'];
+    
+
     @books = Book.search (params['search'], params['page'])
     
     respond_to do |format|
@@ -39,8 +44,6 @@ class BooksController < ApplicationController
     respond_to do |format|
       format.html  # show.html.erb
       format.xml  { render :xml => @book }
-      format.json  { logger.info ('AAAAA')
-          render :text => @book.to_json (:only => [:id, :title, :photo]) }
       format.fbml
       
     end
@@ -183,7 +186,7 @@ class BooksController < ApplicationController
   # 
    def auto_complete_for_book_title
       if params[:suggest_typed].nil? ||  params[:suggest_typed] == ''
-       render :text => ""
+       render :text => "{}"
       else
         books = Book.find(:all,
           :conditions => [ 'LOWER(title) LIKE ? and books.id not in (select book_id from favourites where user_id = ?)',
@@ -193,7 +196,7 @@ class BooksController < ApplicationController
         
         titles = books.map { |n| n.title }
         ids = books.map { |n| n.id }
-        
+       
         render :text => "{fortext:#{params[:suggest_typed].to_json},results:#{titles.to_json},indexs:#{ids.to_json}}"
       end
    end
@@ -201,7 +204,7 @@ class BooksController < ApplicationController
   def publish
 
     if @user.books.size >= 5
- #     FacebookPublisher.deliver_book_choosen_notification(facebook_session.user)
+      FacebookPublisher.deliver_book_choosen_notification(facebook_session.user)
       FacebookPublisher.deliver_book_choosen_feed(facebook_session.user)
     end
 

@@ -34,13 +34,14 @@ test:
     local_port: 3000
 
 production:
-  api_key: 
-  secret_key: 
-  canvas_page_name: 
-  callback_url: 
-  set_asset_host_to_callback_url: true   
+  api_key: 8f279e48d30f0e1d3a7149857f1a1247
+  secret_key: 2be03a8f963ed1f32cbc298c38318692
+  canvas_page_name: pickmifive
+  callback_url: http://pickmi.mikamai.com/
+  pretty_errors: true
+  set_asset_host_to_callback_url: true
   tunnel:
-    public_host_username: 
-    public_host: 
-    public_port: 4007
-    local_port: 3000
+    public_host_username:
+    public_host:
+    public_port:
+    local_port:
